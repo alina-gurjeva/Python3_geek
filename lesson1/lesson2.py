@@ -23,9 +23,10 @@ k_elem = int(input('Введите количество элементов: '))
 elements = [input(f'Введите {i+1} элемент из {k_elem}: ') for i in range(k_elem)]
 # Обработка
 even, uneven = elements[1::2], elements[::2]
-last_element = False if len(even) == len(uneven) else uneven.pop()
+flag = not len(even) == len(uneven)
+last_element = False if not flag else uneven.pop()
 reversed_elements = sum([list(x) for x in zip(even,uneven)], [])
-if last_element:
+if flag:
     reversed_elements.append(last_element)
 # Вывод
 print(*reversed_elements, sep='\n')
