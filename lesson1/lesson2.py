@@ -25,7 +25,7 @@ elements = [input(f'Введите {i+1} элемент из {k_elem}: ') for i 
 even, uneven = elements[1::2], elements[::2]
 flag = not len(even) == len(uneven)
 last_element = False if not flag else uneven.pop()
-reversed_elements = sum([list(x) for x in zip(even,uneven)], [])
+reversed_elements = sum([list(x) for x in zip(even, uneven)], [])
 if flag:
     reversed_elements.append(last_element)
 # Вывод
@@ -106,27 +106,48 @@ while True:
             print('Строка не подходящее значение. Введите число. ')
             continue
 
+'''более базовый вариант решения (хотя через классы было решать интереснее)'''
+basic_list = [7, 5, 3, 3, 2]
+basic_list_sorted = basic_list[::-1]
+element = int(input('Введите натуральное число: '))
+if element in basic_list_sorted:
+    index = basic_list_sorted.index(element)
+    basic_list_sorted.insert(index, element)
+else:
+    if element < basic_list_sorted[0]:
+        basic_list_sorted.insert(0, element)
+    elif element > basic_list_sorted[-1]:
+        basic_list_sorted.append(element)
+    else:
+        for i in range(1, len(basic_list_sorted)):
+            if element + i in basic_list_sorted:
+                index = basic_list_sorted.index(element+i)
+                basic_list_sorted.insert(index, element)
+                break
+basic_list = basic_list_sorted[::-1]
+print(basic_list)
+
 print('Задание 6')
 '''
-6. * Реализовать структуру данных «Товары». 
-Она должна представлять собой список кортежей. 
-Каждый кортеж хранит информацию об отдельном товаре. 
-В кортеже должно быть два элемента — номер товара 
-и словарь с параметрами (характеристиками товара: 
-название, цена, количество, единица измерения). 
-Структуру нужно сформировать программно, 
+6. * Реализовать структуру данных «Товары».
+Она должна представлять собой список кортежей.
+Каждый кортеж хранит информацию об отдельном товаре.
+В кортеже должно быть два элемента — номер товара
+и словарь с параметрами (характеристиками товара:
+название, цена, количество, единица измерения).
+Структуру нужно сформировать программно,
 т.е. запрашивать все данные у пользователя.
 Пример готовой структуры:
 [
 
 (1, {“название”: “компьютер”, “цена”: 20000, “количество”: 5, “eд”: “шт.”}),
-(2, {“название”: “принтер”, “цена”: 6000, “количество”: 2, “eд”: “шт.”}), 
+(2, {“название”: “принтер”, “цена”: 6000, “количество”: 2, “eд”: “шт.”}),
 (3, {“название”: “сканер”, “цена”: 2000, “количество”: 7, “eд”: “шт.”})
 
 ]
-Необходимо собрать аналитику о товарах. 
-Реализовать словарь, 
-в котором каждый ключ — характеристика товара, 
+Необходимо собрать аналитику о товарах.
+Реализовать словарь,
+в котором каждый ключ — характеристика товара,
 например название, а значение — список значений-характеристик, например список названий товаров.
 Пример:
 {
@@ -190,3 +211,22 @@ while i < nums:
 pprint(changed_goods)
 print('Аналитика')
 pprint(your_goods.analyze())
+
+'''Более простой код (соответственно, без обработки исключений, и тд)'''
+goods_basic = []
+names = ['название', 'цена', 'количество', 'eд']
+k_goods = int(input('Введите количество элементов: '))
+for i in range(k_goods):
+    name = input('Введите название: ')
+    price = input('Введите цену: ')
+    quantity = input('Введите количество: ')
+    measure = input('Введите ед. измерения: ')
+    all_info = [name, price, quantity, measure]
+    goods_basic.append((i+1, {k:v for k in names for v in all_info}))
+pprint(goods_basic)
+print('Аналитика')
+dicts = [d[1] for d in goods_basic]
+analytics = {}
+for k in names:
+    analytics[k] = [x[k] for x in dicts]
+pprint(analytics)
