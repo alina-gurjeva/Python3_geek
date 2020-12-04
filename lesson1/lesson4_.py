@@ -136,6 +136,8 @@ def factorial(x):
 
 # 2й вариант функции факториала.
 def factorial_(x):
+    if x == 0 or x == 1:
+        return 1
     answer = 1
     for i in range(1, x+1):
         answer *= i
